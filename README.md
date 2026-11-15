@@ -93,7 +93,7 @@ NeverDrop saves messages and conversation details to `neverdrop.db` in Electron'
 | **Installer is blocked by Windows** | Verify the GitHub release URL and downloaded file. Signing is a pre-release requirement for broader distribution. |
 | **MCP command fails** | Check the executable path, installed runtime (Node/Python/etc.), arguments, permissions and server logs. |
 
-For support, open an issue in the [NeverDrop repository](https://github.com/spadecorp/neverdrop/issues) **after it is created**, and include your Windows version, application version and a redacted error message. Do **not** include keys, personal chat content, or your SQLite database.
+For support, open an issue in the [NeverDrop repository](https://github.com/spadecorp/neverdrop/issues) and include your Windows version, application version and a redacted error message. Do **not** include keys, personal chat content, or your SQLite database.
 
 ## Technical information / development
 
@@ -128,10 +128,10 @@ neverdrop/
 
 ### Release notes and limitations
 
-See [CHANGELOG.md](CHANGELOG.md), [SECURITY.md](SECURITY.md), [PRIVACY.md](PRIVACY.md), and [docs/RELEASE-CHECKLIST.md](docs/RELEASE-CHECKLIST.md). Initial public release requires verifying license attribution, upgrading the unsupported Electron runtime, a completed security audit, and testing the Windows `.exe` on a clean system. Until those are complete, the packaged source is a **release candidate**, not a verified public release.
+See the [v1.1.0 release](https://github.com/spadecorp/neverdrop/releases/tag/v1.1.0), [CHANGELOG.md](CHANGELOG.md), [SECURITY.md](SECURITY.md), and [PRIVACY.md](PRIVACY.md). The Windows download is currently **unsigned**; review the release notes and keep a backup of your local database before updating.
 
 ### Upstream credit and licensing
 
-This source is based on code associated with [`duke-haderach/neverdrop`](https://github.com/duke-haderach/neverdrop) plus SPaDe Corp changes. The upstream `package.json` declares MIT licensing but a standalone upstream LICENSE file was not present when checked. **Confirm the original license/attribution rights before public redistribution.** See [docs/UPSTREAM-AND-LICENSE.md](docs/UPSTREAM-AND-LICENSE.md).
+NeverDrop contains code associated with [`duke-haderach/neverdrop`](https://github.com/duke-haderach/neverdrop), whose upstream README badge and `package.json` declare MIT licensing, as well as SPaDE Corp modifications. The repository includes the MIT license text and attribution. See [LICENSE](LICENSE) and [docs/UPSTREAM-AND-LICENSE.md](docs/UPSTREAM-AND-LICENSE.md).
 
-© 2026 SPaDe Corp (SPaDe-specific changes). Upstream contributions remain credited to their respective authors.
+© 2026 SPaDE Corp for SPaDE-specific modifications. Original contributions remain credited to their respective authors.

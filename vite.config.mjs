@@ -6,6 +6,6 @@ export default defineConfig({
   plugins: [react()],
   base: './',
   build: { outDir: 'dist', emptyOutDir: true },
-  resolve: { alias: { '@': path.resolve(__dirname, 'src') } },
+  resolve: { alias: { '@': path.resolve(import.meta.dirname, 'src') } },
   server: { port: 5173 },
 });

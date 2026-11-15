@@ -18,6 +18,7 @@ function createWindow() {
     minWidth: 900,
     minHeight: 600,
     backgroundColor: '#101419',
+    icon: path.join(__dirname, 'assets', 'neverdrop.png'),
     titleBarStyle: process.platform === 'darwin' ? 'hiddenInset' : 'default',
     webPreferences: {
       preload: path.join(__dirname, 'preload.js'),

@@ -18,18 +18,18 @@
   "dependencies": {
     "@anthropic-ai/sdk": "^0.27.0",
     "@google/generative-ai": "^0.21.0",
-    "better-sqlite3": "^11.3.0",
+    "better-sqlite3": "13.1.1",
     "keytar": "^7.9.0",
     "openai": "^4.67.0"
   },
   "devDependencies": {
-    "@vitejs/plugin-react": "^4.3.1",
+    "@vitejs/plugin-react": "^6.0.1",
     "concurrently": "^9.0.1",
-    "electron": "^29.4.6",
-    "electron-builder": "^25.0.5",
+    "electron": "^45.3.2",
+    "electron-builder": "^26.18.0",
     "react": "^18.3.1",
     "react-dom": "^18.3.1",
-    "vite": "^5.4.8",
+    "vite": "^8.3.8",
     "wait-on": "^8.0.1"
   },
   "build": {
@@ -41,19 +41,25 @@
     "files": [
       "dist/**/*",
       "electron/**/*",
-      "package.json"
+      "package.json",
+      "LICENSE"
     ],
     "win": {
       "target": [
         "nsis",
         "portable"
-      ]
+      ],
+      "icon": "electron/assets/neverdrop.ico"
     },
     "mac": {
-      "target": "dmg",
-      "arch": [
-        "x64",
-        "arm64"
+      "target": [
+        {
+          "target": "dmg",
+          "arch": [
+            "x64",
+            "arm64"
+          ]
+        }
       ]
     },
     "linux": {
@@ -73,10 +79,15 @@
       "allowToChangeInstallationDirectory": true,
       "createDesktopShortcut": true,
       "createStartMenuShortcut": true,
-      "artifactName": "NeverDrop-SPaDe-Setup.${ext}"
+      "artifactName": "NeverDrop-SPaDe-Setup.${ext}",
+      "installerIcon": "electron/assets/neverdrop.ico",
+      "uninstallerIcon": "electron/assets/neverdrop.ico"
     },
     "portable": {
       "artifactName": "NeverDrop-SPaDe-Portable.${ext}"
     }
+  },
+  "engines": {
+    "node": ">=22.12.0"
   }
 }

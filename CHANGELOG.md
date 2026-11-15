@@ -1,17 +1,17 @@
 # Changelog
 
-## [Unreleased] — Windows release candidate
+## [1.1.0] — 2026-11-14
 
-- Applied SPaDe Corp design language and logo to the NeverDrop workspace.
-- Added corporate product-family sidebar and product links.
-- Improved creating, renaming and deleting conversations and managing providers.
-- Added additive SQLite migrations and backup support for older data layouts; repaired legacy full-text-search triggers using integer SQLite row IDs.
-- Preserved OS-keychain-backed API keys and local chat history.
-- Added detailed end-user documentation and a gated Windows release workflow.
+- Added a distinct NeverDrop app icon: flat yellow **N** on a grey square, matching SPaDE Corp's yellow/grey palette.
+- Preserved the SPaDE wordmark inside the NeverDrop workspace and fixed its path for packaged Electron applications.
+- Released Windows installer and portable packaging targets.
+- Upgraded to Electron 45, electron-builder 26, Vite 8 and N-API-based better-sqlite3.
+- Corrected legacy SQLite migrations, provider deletion, text-based IDs and FTS indexing while preserving saved data.
+- Added Windows CI regression tests and dependency audit gate.
+- Added end-user documentation, privacy and security notes, and upstream attribution.
 
-### Current limitations
+### Known limitations
 
-- Provider changes and context transfer are manual; automatic quota-based failover is not implemented.
-- Electron 29 is end-of-life; upgrade and test before public publishing.
-- Windows installer signing has not been configured.
-- Public release and hosting are pending GitHub repository creation and a successful CI build.
+- Automatic fallback between AI providers is not implemented; provider switching and context transfer are manual.
+- Windows builds are currently unsigned and may prompt Windows SmartScreen.
+- The npm audit passes at high-severity threshold, but six moderate transitive-dependency findings remain under review.

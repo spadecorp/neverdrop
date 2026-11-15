@@ -6,6 +6,7 @@ test('production package includes Electron entry points and built renderer', () 
   assert.equal(packageJson.main, 'electron/main.js');
   assert.ok(packageJson.build.files.includes('electron/**/*'));
   assert.ok(packageJson.build.files.includes('dist/**/*'));
+  assert.ok(packageJson.build.files.includes('LICENSE'), 'Distribute MIT license with packaged app');
 });
 
 test('native modules are unpacked from ASAR', () => {

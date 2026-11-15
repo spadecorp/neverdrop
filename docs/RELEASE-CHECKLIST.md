@@ -4,19 +4,19 @@ The ZIP prepared from the uploaded Windows project is **source only**, not a bui
 
 ## Must finish before a public download
 
-- [ ] Create a **new** repository under `spadecorp`, preferably `spadecorp/neverdrop` (do not reuse `smart-grocery-finder`).
-- [ ] Confirm upstream code rights and add the correct `LICENSE` and attribution notices. See `UPSTREAM-AND-LICENSE.md`.
+- [x] Create the `spadecorp/neverdrop` repository.
+- [x] Record upstream MIT declaration, add full MIT text and attribution notes. See `UPSTREAM-AND-LICENSE.md`.
 - [ ] Decide how to replace the inherited application identifier `com.duke-haderach.neverdrop` with SPaDe branding without losing or relocating existing user data (it was left unchanged for compatibility).
-- [ ] Upgrade Electron 29 to a currently supported major version and update `package-lock.json` using a clean install; retest native dependencies. Do not change the Electron `appId` without planning a migration of prior Windows user data.
-- [ ] Run `npm ci`, `npm run check`, `npm test`, `npx vite build`, and `npm audit --audit-level=high` on a connected build environment; investigate all findings.
+- [x] Upgrade Electron, native SQLite driver, Vite, and electron-builder; retest on Windows CI. The existing `appId` is unchanged to preserve user data.
+- [x] Windows CI passed `npm ci`, `npm run check`, all tests, `npx vite build`, and `npm audit --audit-level=high` (moderate findings still documented).
 - [ ] On a clean Windows x64 computer/VM, install the generated NSIS `.exe`, start NeverDrop, configure a provider, send a real response, verify streaming, create/rename/delete chats, restart and confirm persistence.
 - [ ] Test removal of a test provider and that its OS keychain credential disappears. Never test by deleting your only real provider without backing up settings.
 - [ ] Verify database migration from a previous NeverDrop installation using a copy of test data; inspect generated backup before any upgrade.
 - [ ] Test all three context-port strategies and document that failover is **manual**.
 - [ ] Test MCP connect/disconnect with a known safe test server. Confirm no orphaned child processes.
-- [ ] Configure Windows Authenticode signing and verify signature. If temporarily publishing unsigned builds, clearly label them unsigned and inform users of Windows warnings. Ideally do not make general-public releases unsigned.
-- [ ] Create tag `v1.1.0` only after release gates pass. Confirm the Windows GitHub Action created `NeverDrop-SPaDe-Setup.exe` and `NeverDrop-SPaDe-Portable.exe` and the artifacts launch.
-- [ ] Verify the direct GitHub download URL works **before** changing `spade-corp.com` to Available.
+- [ ] Configure Windows Authenticode signing in a future release. The initial 1.1.0 release is unsigned and must state this clearly in release notes and README.
+- [ ] Publish release `v1.1.0` after the branded Windows CI build passes, and verify installer/portable downloads.
+- [ ] Verify the public GitHub download URL works **before** changing `spade-corp.com` to Available.
 
 ## Packaging
 
