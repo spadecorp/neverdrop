@@ -12,10 +12,10 @@ To report a security problem privately, email **spadecorp@outlook.com** with the
 
 ## Production release gates
 
-1. Migrate off end-of-life Electron 29; test a supported release on Windows.
-2. Run a successful online dependency audit and review findings rather than hiding results.
+1. Use an actively maintained Electron runtime; Windows CI now builds Electron 45.
+2. Run an online dependency audit and resolve high/critical findings before publishing; review remaining moderate issues.
 3. Validate installer packaging, OS keychain use, SQLite migration/backups, model chat, and MCP teardown on a clean Windows VM.
-4. Configure Authenticode code signing for public Windows distribution.
+4. Configure Authenticode signing for broader Windows distribution. Current 1.1.0 downloads are unsigned and prominently disclosed.
 5. Confirm source licensing and copyright attributions before publication.
 
 The Windows CI release workflow runs tests and an audit; passing it is necessary but does not constitute a full security audit.

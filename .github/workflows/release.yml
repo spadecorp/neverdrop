@@ -42,8 +42,7 @@ jobs:
       - name: Dependency security audit
         run: npm audit --audit-level=high
 
-      - name: Require licensing clearance for public tags
-        if: startsWith(github.ref, 'refs/tags/v')
+      - name: Require LICENSE file before public release
         shell: pwsh
         run: |
           if (!(Test-Path LICENSE)) {
@@ -61,7 +60,7 @@ jobs:
           Get-ChildItem release/*.exe | Select-Object Name,Length
 
       - name: Publish downloadable artifacts for review
-        if: ${{ !startsWith(github.ref, 'refs/tags/v') }}
+        if: ${{ !(github.ref == 'refs/heads/main' && contains(github.event.head_commit.message, '[publish-neverdrop-v1.1.0]')) }}
         uses: actions/upload-artifact@v4
         with:
           name: neverdrop-windows-x64
@@ -69,13 +68,17 @@ jobs:
           if-no-files-found: error
           retention-days: 7
 
-      - name: Publish GitHub Release
-        if: startsWith(github.ref, 'refs/tags/v')
+      - name: Publish v1.1.0 when explicitly requested by the release merge commit
+        if: ${{ github.ref == 'refs/heads/main' && contains(github.event.head_commit.message, '[publish-neverdrop-v1.1.0]') }}
         uses: softprops/action-gh-release@v2
         with:
           files: |
             release/NeverDrop-SPaDe-Setup.exe
             release/NeverDrop-SPaDe-Portable.exe
-          generate_release_notes: true
-          draft: true
+          tag_name: v1.1.0
+          target_commitish: ${{ github.sha }}
+          name: "NeverDrop 1.1.0 for Windows"
+          body_path: docs/RELEASE-NOTES-v1.1.0.md
+          draft: false
+          prerelease: false
           fail_on_unmatched_files: true
