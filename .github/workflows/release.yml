@@ -70,7 +70,7 @@ jobs:
 
       - name: Publish v1.1.0 when explicitly requested by the release merge commit
         if: ${{ github.ref == 'refs/heads/main' && contains(github.event.head_commit.message, '[publish-neverdrop-v1.1.0]') }}
-        uses: softprops/action-gh-release@v2
+        uses: softprops/action-gh-release@v3
         with:
           files: |
             release/NeverDrop-SPaDe-Setup.exe
