@@ -1,0 +1,35 @@
+# Dependencies and build outputs
+node_modules/
+dist/
+dist-electron/
+release/
+out/
+.cache/
+*.log
+npm-debug.log*
+
+# Local secrets, credentials, databases, config
+.env
+.env.*
+!.env.example
+*.db
+*.sqlite
+*.sqlite3
+*.db-wal
+*.db-shm
+*.sqlite-wal
+*.sqlite-shm
+neverdrop-backup-*.sqlite
+*.pem
+*.p12
+*.pfx
+*.key
+
+# Editors / OS / temporary patches
+.vs/
+.vscode/
+.idea/
+.DS_Store
+Thumbs.db
+*.bak
+*.tmp

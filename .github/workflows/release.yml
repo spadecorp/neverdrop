@@ -1,0 +1,81 @@
+name: Windows build and release
+
+on:
+  push:
+    branches: [main]
+    tags: ['v*']
+  pull_request:
+    branches: [main]
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  windows:
+    runs-on: windows-latest
+    permissions:
+      contents: write
+
+    steps:
+      - name: Check out source
+        uses: actions/checkout@v4
+
+      - name: Set up Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+          cache: npm
+
+      - name: Install locked dependencies
+        run: npm ci
+
+      - name: Verify JavaScript
+        run: npm run check
+
+      - name: Run regression tests
+        run: npm test
+
+      - name: Compile React UI
+        run: npx vite build
+
+      - name: Dependency security audit
+        run: npm audit --audit-level=high
+
+      - name: Require licensing clearance for public tags
+        if: startsWith(github.ref, 'refs/tags/v')
+        shell: pwsh
+        run: |
+          if (!(Test-Path LICENSE)) {
+            throw 'LICENSE file missing. Confirm upstream distribution rights and add the appropriate full license before tagging a public release.'
+          }
+
+      - name: Build Windows x64 installer and portable EXE
+        run: npx electron-builder --win --x64 --publish never
+
+      - name: Check expected installer filenames
+        shell: pwsh
+        run: |
+          if (!(Test-Path 'release/NeverDrop-SPaDe-Setup.exe')) { throw 'Installer executable not found' }
+          if (!(Test-Path 'release/NeverDrop-SPaDe-Portable.exe')) { throw 'Portable executable not found' }
+          Get-ChildItem release/*.exe | Select-Object Name,Length
+
+      - name: Publish downloadable artifacts for review
+        if: ${{ !startsWith(github.ref, 'refs/tags/v') }}
+        uses: actions/upload-artifact@v4
+        with:
+          name: neverdrop-windows-x64
+          path: release/*.exe
+          if-no-files-found: error
+          retention-days: 7
+
+      - name: Publish GitHub Release
+        if: startsWith(github.ref, 'refs/tags/v')
+        uses: softprops/action-gh-release@v2
+        with:
+          files: |
+            release/NeverDrop-SPaDe-Setup.exe
+            release/NeverDrop-SPaDe-Portable.exe
+          generate_release_notes: true
+          draft: true
+          fail_on_unmatched_files: true
