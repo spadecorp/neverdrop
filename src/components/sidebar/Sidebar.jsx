@@ -12,7 +12,7 @@ export function Sidebar({ conversations, activeId, onSelect, onCreate, onRename,
       <div className="sidebar-brand">
         <div className="brand-lockup">
           <div className="brand-copy">
-            <img className="brand-logo" src="/spade-wordmark.png" alt="SPaDe Corp" />
+            <img className="brand-logo" src={`${import.meta.env.BASE_URL}spade-wordmark.png`} alt="SPaDe Corp" />
             <div className="brand-caption">ENTERPRISE WORKSPACE</div>
           </div>
           <button className="new-chat-button" onClick={onCreate}>＋ New chat</button>

@@ -47,7 +47,8 @@
       "target": [
         "nsis",
         "portable"
-      ]
+      ],
+      "icon": "electron/assets/neverdrop.ico"
     },
     "mac": {
       "target": [
@@ -77,7 +78,9 @@
       "allowToChangeInstallationDirectory": true,
       "createDesktopShortcut": true,
       "createStartMenuShortcut": true,
-      "artifactName": "NeverDrop-SPaDe-Setup.${ext}"
+      "artifactName": "NeverDrop-SPaDe-Setup.${ext}",
+      "installerIcon": "electron/assets/neverdrop.ico",
+      "uninstallerIcon": "electron/assets/neverdrop.ico"
     },
     "portable": {
       "artifactName": "NeverDrop-SPaDe-Portable.${ext}"
