@@ -11,11 +11,14 @@ try { ({ DatabaseSync } = require('node:sqlite')); } catch { /* Node 20 lacks th
 
 function fixtureDb(t) {
   const dir = fs.mkdtempSync(path.join(os.tmpdir(), 'neverdrop-migrate-test-'));
-  t.after(() => fs.rmSync(dir, { recursive: true, force: true }));
   const file = path.join(dir, 'neverdrop.db');
   const db = new DatabaseSync(file);
+  // Windows cannot remove an open SQLite file; close it before deleting the fixture directory.
+  t.after(() => {
+    try { db.close(); }
+    finally { fs.rmSync(dir, { recursive: true, force: true, maxRetries: 3, retryDelay: 100 }); }
+  });
   db.exec('PRAGMA foreign_keys = ON; PRAGMA journal_mode = WAL');
-  t.after(() => { try { db.close(); } catch {} });
   return { db, file, dir };
 }
 
@@ -47,9 +50,12 @@ test('migrates legacy tables without losing IDs, message history or pre-existing
   assert.ok(result.backupPath.startsWith(dir));
   assert.ok(fs.existsSync(result.backupPath));
   const backup = new DatabaseSync(result.backupPath, { readOnly: true });
-  assert.equal(backup.prepare('SELECT COUNT(*) AS n FROM providers').get().n, 3);
-  assert.equal(backup.prepare("SELECT COUNT(*) AS n FROM pragma_table_info('providers') WHERE name='provider'").get().n, 0);
-  backup.close();
+  try {
+    assert.equal(backup.prepare('SELECT COUNT(*) AS n FROM providers').get().n, 3);
+    assert.equal(backup.prepare("SELECT COUNT(*) AS n FROM pragma_table_info('providers') WHERE name='provider'").get().n, 0);
+  } finally {
+    backup.close();
+  }
 
   const c = db.prepare('SELECT * FROM conversations WHERE id=17').get();
   assert.equal(c.title, 'Original chat');

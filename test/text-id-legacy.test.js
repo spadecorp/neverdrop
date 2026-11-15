@@ -11,10 +11,13 @@ try { ({ DatabaseSync } = require('node:sqlite')); } catch {}
 function fixture(t) {
   const dir = fs.mkdtempSync(path.join(os.tmpdir(), 'neverdrop-text-ids-'));
   const file = path.join(dir, 'neverdrop.db');
-  t.after(() => fs.rmSync(dir, { recursive:true, force:true }));
   const db = new DatabaseSync(file);
+  // A single ordered teardown avoids EBUSY on Windows when the SQLite file is open.
+  t.after(() => {
+    try { db.close(); }
+    finally { fs.rmSync(dir, { recursive: true, force: true, maxRetries: 3, retryDelay: 100 }); }
+  });
   db.exec('PRAGMA foreign_keys=ON; PRAGMA journal_mode=WAL;');
-  t.after(() => db.close());
   db.transaction = fn => (...args) => {
     db.exec('BEGIN IMMEDIATE');
     try { const v = fn(...args); db.exec('COMMIT'); return v; }
